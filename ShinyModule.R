@@ -286,9 +286,11 @@ shinyModule <- function(input, output, session, data){ ## The parameter "data" i
   })
 
   #return(reactive(filtered_data())) ## if data are not modified, the unmodified input data must be returned
+  # The range slider only exists once the UI has been opened in a browser.
+  # Until then, pass the input data on unchanged so the next app can run.
   return(
     reactive({
-      dat.f()
+      if (is.null(input$slider_filtertest)) data else dat.f()
     })
   )
 }
